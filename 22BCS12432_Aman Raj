@@ -1,0 +1,60 @@
+347. Top k frequent element
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> freqMap;
+        for (int num : nums) {
+            freqMap[num]++;
+        }
+        
+        vector<pair<int, int>> freqVec(freqMap.begin(), freqMap.end());
+        sort(freqVec.begin(), freqVec.end(), [](pair<int, int>& a, pair<int, int>& b) {
+            return a.second > b.second;
+        });
+        
+        vector<int> result;
+        for (int i = 0; i < k; ++i) {
+            result.push_back(freqVec[i].first);
+        }
+        
+        return result;
+    }
+};
+
+215. Kth largest element in an array
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int> maxHeap;
+        
+        for (int num : nums) {
+            maxHeap.push(num);
+        }
+        
+        for (int i = 1; i < k; ++i) {
+            maxHeap.pop();
+        }
+        
+        return maxHeap.top();
+    }
+};
+
+162. Find peak Element
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        int left = 0, right = nums.size() - 1;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] > nums[mid + 1]) {
+                right = mid;  // Peak lies on the left or at mid
+            } else {
+                left = mid + 1;  // Peak lies on the right
+            }
+        }
+        
+        return left;
+    }
+};
